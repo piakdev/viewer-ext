@@ -1,5 +1,5 @@
 // CC Viewer Zen — hide composer + action menu + session header, maximize read area
-const VERSION = "1.0.5";
+const VERSION = "1.0.6";
 console.log(
   `%c[CC Viewer Zen v${VERSION}]%c loaded`,
   "color:#fff;background:#7c3aed;padding:2px 6px;border-radius:3px",
@@ -48,10 +48,32 @@ function hideSessionHeader() {
   });
 }
 
+// ── 4. app header (breadcrumb bar บนสุด: project path / session id) ──
+// source AppLayout.tsx: <header className="h-(--spacing-header-height) ... bg-muted/30 ...">
+// ไม่ซ่อน — แค่บีบให้เตี้ยลง 25% (nav ยังใช้ได้)
+function slimAppHeader() {
+  document.querySelectorAll("header").forEach((h) => {
+    const c = h.className || "";
+    if (typeof c === "string" && c.includes("bg-muted/30")) {
+      // อ่านความสูงจริงครั้งแรก แล้วบีบเหลือ 75% (เตี้ยลง 25%, ตัวหนังสือคงเดิม)
+      if (!h.dataset.zenSlim) {
+        const full = h.getBoundingClientRect().height;
+        if (full > 0) {
+          h.style.setProperty("height", `${full * 0.75}px`, "important");
+          h.style.setProperty("min-height", "0", "important");
+          h.style.setProperty("overflow", "hidden", "important");
+          h.dataset.zenSlim = "1";
+        }
+      }
+    }
+  });
+}
+
 function run() {
   hideComposer();
   hideActionMenu();
   hideSessionHeader();
+  slimAppHeader();
 }
 run();
 const obs = new MutationObserver(run);
