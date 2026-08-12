@@ -1,31 +1,31 @@
-/* ── CC Viewer Zen: ซ่อน input composer → maximize อ่าน ──
+/* ── CC Viewer Zen: typography compaction ──
+ * บีบ line-height + ระยะห่างบรรทัดในเนื้อหา chat ลง ~30% → บรรทัด/หน้าเยอะขึ้น
+ * (ส่วนซ่อน composer/menu/header ทำใน zen.js)
  *
- * DOM จริง (verify 12 ส.ค. 2026 จาก DevTools):
- *   <div class="flex-shrink-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
- *     ...
- *     <textarea data-slot="textarea"
- *       placeholder="Type your message... (Start with / for commands, ...)">
- *
- * search ใช้ <input> คนละ element → ไม่โดน
+ * DOM (MarkdownContent.tsx):
+ *   <p  class="mb-4 leading-7 ...">   leading-7 = 1.75rem (28px)
+ *   <li class="leading-7 ...">
+ *   <ul/ol class="mb-4 ... space-y-2">
  */
 
-/* ── หลัก: footer wrapper (flex-shrink-0 + มี composer textarea ข้างใน) ── */
-div[class~="flex-shrink-0"]:has(textarea[data-slot="textarea"]) {
-  display: none !important;
+/* paragraph + list item: line-height 28px → ~20px (-28%) */
+.leading-7 {
+  line-height: 1.25rem !important; /* 20px */
 }
 
-/* ── สำรอง 1: wrapper ใดๆ ที่ backdrop-blur + ห่อ composer ── */
-div[class*="backdrop-blur"]:has(textarea[data-slot="textarea"]) {
-  display: none !important;
+/* ระยะห่างใต้ paragraph/list: mb-4 (1rem) → 0.5rem (-50%) */
+.mb-4 {
+  margin-bottom: 0.5rem !important;
 }
 
-/* ── สำรอง 2: placeholder แบบ contains (i18n อาจเปลี่ยน) ── */
-div[class~="flex-shrink-0"]:has(textarea[placeholder*="Type your message"]),
-div[class~="flex-shrink-0"]:has(textarea[placeholder*="Type your response"]) {
-  display: none !important;
+/* gap ระหว่าง list item: space-y-2 → แคบลง */
+.space-y-2 > * + * {
+  margin-top: 0.25rem !important;
 }
 
-/* ── สำรอง 3: ซ่อน textarea composer ตรงๆ (เผื่อ wrapper selector พลาด) ── */
-textarea[data-slot="textarea"][aria-label*="Message input"] {
-  display: none !important;
-}
+/* หัวข้อ: ลด margin บน/ล่าง ให้กระชับ (ไม่แตะขนาดฟอนต์) */
+.mt-8 { margin-top: 1rem !important; }
+.mt-6 { margin-top: 0.75rem !important; }
+.mt-4 { margin-top: 0.5rem !important; }
+.mb-6 { margin-bottom: 0.75rem !important; }
+.mb-3 { margin-bottom: 0.4rem !important; }
