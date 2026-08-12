@@ -70,3 +70,13 @@ new MutationObserver(run).observe(document.documentElement, {
   childList: true,
   subtree: true,
 });
+
+// clipboard fix: inject page-context script เพื่อ patch navigator.clipboard
+// (content_script อยู่ isolated world แก้ clipboard ของ page ตรงๆ ไม่ได้)
+// ทำให้ปุ่ม Copy ทำงานบน HTTP (navigator.clipboard = secure-context only)
+(function injectClipboardFix() {
+  const s = document.createElement("script");
+  s.src = chrome.runtime.getURL("clipboard-fix.js");
+  s.onload = () => s.remove();
+  (document.head || document.documentElement).appendChild(s);
+})();
