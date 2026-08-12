@@ -13,20 +13,24 @@ Browser extension เล็กๆ ซ่อน input composer ใน [claude-cod
 
 ## ติดตั้ง
 
+### Chrome / Brave / Edge (แนะนำ)
+
+```
+brave://extensions  (หรือ chrome://extensions)
+→ Developer mode (เปิด)
+→ Load unpacked → เลือกโฟลเดอร์นี้
+```
+
+extension ค้างถาวร ไม่หายเมื่อปิด browser · ไม่ต้องตั้งค่าอะไรเพิ่ม
+
 ### Firefox / LibreWolf
 
 ```
 about:debugging → This Firefox → Load Temporary Add-on → เลือก manifest.json
 ```
 
-> Temporary add-on หายเมื่อปิด browser ต้องโหลดใหม่ทุกครั้ง
-> ถ้าอยากถาวร: sign ผ่าน [AMO](https://addons.mozilla.org/developers/) หรือปิด `xpinstall.signatures.required` (Developer/Nightly)
-
-### Chrome / Brave / Edge
-
-```
-chrome://extensions → Developer mode → Load unpacked → เลือกโฟลเดอร์นี้
-```
+> ⚠️ Temporary add-on หายเมื่อปิด browser + เจอ gotcha (CSS `:has()` / reload
+> ไม่ apply). แนะนำใช้ Brave/Chrome แทน
 
 ## ปรับ host
 
