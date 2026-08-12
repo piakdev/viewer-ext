@@ -1,21 +1,26 @@
 /* ── CC Viewer Zen: ซ่อน input composer → maximize อ่าน ──
- * target เฉพาะ textarea "Type your message..." (composer)
- * ไม่โดน search ("Search projects...") เพราะ search ใช้ <input>
+ *
+ * composer = textarea (data-slot="textarea") ที่อยู่ใน footer
+ * wrapper "flex-shrink-0 ... backdrop-blur" (SessionPageMain.tsx:822)
+ * search ใช้ <input> คนละ element → ไม่โดน
  */
 
-/* ซ่อน div/form ที่ครอบ textarea composer ตรงๆ (placeholder เป๊ะ) */
-div:has(> textarea[placeholder="Type your message..."]),
-div:has(> div textarea[placeholder="Type your message..."]),
-form:has(textarea[placeholder="Type your message..."]),
-
-/* footer wrapper (flex-shrink-0 + backdrop-blur) ที่ห่อ composer */
-div[class*="flex-shrink-0"]:has(textarea[placeholder="Type your message..."]),
-div[class*="backdrop-blur"]:has(textarea[placeholder="Type your message..."]) {
+/* 1. footer wrapper ที่ห่อ composer (backdrop-blur + มี textarea ข้างใน) */
+div[class*="backdrop-blur"]:has(textarea[data-slot="textarea"]) {
   display: none !important;
 }
 
-/* กันเผื่อ i18n เปลี่ยนเป็นตัวอื่นในอนาคต: ถ้ามี "response here" (ResumeChat) */
+/* 2. เผื่อ class เปลี่ยน: form/div ที่ครอบ composer textarea ตรงๆ */
+form:has(> textarea[data-slot="textarea"]),
+form:has(textarea[data-slot="textarea"]),
+div:has(> textarea[data-slot="textarea"]) {
+  display: none !important;
+}
+
+/* 3. fallback ด้วย placeholder (เผื่อ data-slot หาย) — composer + resume */
+div:has(> textarea[placeholder="Type your message..."]),
 div:has(> textarea[placeholder="Type your response here..."]),
+form:has(textarea[placeholder="Type your message..."]),
 form:has(textarea[placeholder="Type your response here..."]) {
   display: none !important;
 }
