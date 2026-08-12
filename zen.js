@@ -1,5 +1,5 @@
 // CC Viewer Zen — hide composer + action menu + session header, maximize read area
-const VERSION = "1.0.6";
+const VERSION = "1.0.7";
 console.log(
   `%c[CC Viewer Zen v${VERSION}]%c loaded`,
   "color:#fff;background:#7c3aed;padding:2px 6px;border-radius:3px",
@@ -59,7 +59,7 @@ function slimAppHeader() {
       if (!h.dataset.zenSlim) {
         const full = h.getBoundingClientRect().height;
         if (full > 0) {
-          h.style.setProperty("height", `${full * 0.75}px`, "important");
+          h.style.setProperty("height", `${full * 0.6375}px`, "important");
           h.style.setProperty("min-height", "0", "important");
           h.style.setProperty("overflow", "hidden", "important");
           h.dataset.zenSlim = "1";
